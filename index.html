@@ -6,13 +6,8 @@
   <meta name="description" content="Вокзал виртуальных путешествий — бесплатные путешествия по миру для тех, кому дороги мечты">
   <title>Вокзал виртуальных путешествий</title>
 
-  <!-- Фавиконка-эмодзи в виде поезда (SVG data-URI, не требует файла) -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚂</text></svg>">
 
-  <!--
-    Ранний скрипт: применяем сохранённые тему и размер шрифта
-    ДО отрисовки страницы, чтобы избежать "вспышки" (FOUC).
-  -->
   <script>
     (function () {
       try {
@@ -20,7 +15,7 @@
         var f = localStorage.getItem('vokzal_font') || 'medium';
         document.documentElement.setAttribute('data-theme', t);
         document.documentElement.setAttribute('data-font', f);
-      } catch (e) { /* localStorage недоступен — используем значения по умолчанию */ }
+      } catch (e) { }
     })();
   </script>
 
@@ -34,8 +29,6 @@
       padding: 0;
     }
 
-    /* Базовый размер шрифта задаётся на html, всё остальное — в rem.
-       Смена шрифта пересчитывает ВСЁ приложение пропорционально. */
     html[data-font="small"]  { font-size: 16px; }
     html[data-font="medium"] { font-size: 20px; }
     html[data-font="large"]  { font-size: 24px; }
@@ -45,27 +38,23 @@
       -webkit-text-size-adjust: 100%;
     }
 
-    /* =========================================================
-       ЦВЕТОВЫЕ ПЕРЕМЕННЫЕ — ДНЕВНАЯ ТЕМА (по умолчанию)
-       Кремовый фон, глубокий синий текст, золотисто-янтарный акцент.
-       ========================================================= */
     :root,
     html[data-theme="day"] {
-      --bg-main:            #faf4e1;   /* мягкий кремовый фон */
+      --bg-main:            #faf4e1;
       --bg-header:          linear-gradient(135deg, #fdf8e9 0%, #f5e6c8 100%);
       --bg-card:            #ffffff;
       --bg-card-hover:      #fffbf0;
       --bg-btn-secondary:   #f0e8d0;
       --bg-btn-secondary-h: #e6dbb8;
 
-      --text-main:          #1a2a4a;   /* глубокий синий */
+      --text-main:          #1a2a4a;
       --text-muted:         #4a5a7a;
       --text-inverse:       #ffffff;
 
-      --accent:             #d4a017;   /* золотисто-янтарный */
+      --accent:             #d4a017;
       --accent-dark:        #b8860b;
       --accent-light:       #f0c040;
-      --on-accent:          #1a2a4a;   /* тёмный текст на золоте — контраст 5.6:1 */
+      --on-accent:          #1a2a4a;
 
       --border:             #e8ddc0;
       --border-strong:      #d4c090;
@@ -76,10 +65,6 @@
       --glow:               0 0 20px rgba(212, 160, 23, 0.35);
     }
 
-    /* =========================================================
-       ЦВЕТОВЫЕ ПЕРЕМЕННЫЕ — НОЧНАЯ ТЕМА
-       Тёмно-синий угольный фон, приглушённый белый, янтарное свечение.
-       ========================================================= */
     html[data-theme="night"] {
       --bg-main:            #0f1628;
       --bg-header:          linear-gradient(135deg, #0a1128 0%, #1a2440 100%);
@@ -95,7 +80,7 @@
       --accent:             #f0b429;
       --accent-dark:        #ffc947;
       --accent-light:       #ffd966;
-      --on-accent:          #0f1628;   /* тёмный текст на янтаре — контраст 10:1 */
+      --on-accent:          #0f1628;
 
       --border:             #2a3a5a;
       --border-strong:      #3a4a6a;
@@ -106,9 +91,6 @@
       --glow:               0 0 24px rgba(240, 180, 41, 0.55);
     }
 
-    /* =========================================================
-       ОБЩИЕ СТИЛИ
-       ========================================================= */
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
                    "Helvetica Neue", Arial, "Noto Sans", sans-serif;
@@ -121,8 +103,6 @@
       overflow-x: hidden;
     }
 
-    /* В ночном режиме — романтичное звёздное небо на фоне.
-       Слой звёзд — фиксированный, pointer-events: none, чтобы не мешал кликам. */
     body::before {
       content: '';
       position: fixed;
@@ -145,10 +125,8 @@
     }
     html[data-theme="night"] body::before { opacity: 1; }
 
-    /* Любой прямой потомок body выше слоя звёзд */
     body > * { position: relative; z-index: 1; }
 
-    /* Уважаем настройки пользователя «меньше движения» */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.001ms !important;
@@ -158,16 +136,12 @@
       }
     }
 
-    /* Универсальное видимое фокусное кольцо для доступности */
     :focus-visible {
       outline: 3px solid var(--text-main);
       outline-offset: 3px;
       border-radius: 4px;
     }
 
-    /* =========================================================
-       ШАПКА САЙТА
-       ========================================================= */
     .app-header {
       background: var(--bg-header);
       padding: 2rem 1.5rem 1.75rem;
@@ -177,7 +151,6 @@
       transition: background 0.35s ease, border-color 0.35s ease;
     }
 
-    /* Золотая светящаяся полоска под шапкой — «огни перрона» */
     .app-header::after {
       content: '';
       position: absolute;
@@ -190,9 +163,6 @@
       pointer-events: none;
     }
 
-    /* =========================================================
-       ХЛЕБНЫЕ КРОШКИ
-       ========================================================= */
     .breadcrumbs {
       display: flex;
       flex-wrap: wrap;
@@ -283,7 +253,6 @@
       max-width: 52ch;
     }
 
-    /* ---------- Блок настроек доступности ---------- */
     .settings {
       display: flex;
       flex-wrap: wrap;
@@ -344,16 +313,12 @@
       box-shadow: var(--shadow-sm);
     }
 
-    /* =========================================================
-       ОСНОВНОЙ КОНТЕЙНЕР ЭКРАНОВ
-       ========================================================= */
     #app {
       max-width: 1200px;
       margin: 0 auto;
       padding: 2rem 1.5rem 4rem;
     }
 
-    /* Плавное появление каждого экрана SPA */
     .screen {
       animation: screenFadeIn 0.4s ease-out;
     }
@@ -362,9 +327,6 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* =========================================================
-       ГЛАВНЫЙ ЭКРАН — HERO
-       ========================================================= */
     .hero {
       text-align: center;
       margin-bottom: 2.5rem;
@@ -382,9 +344,6 @@
       margin: 0 auto;
     }
 
-    /* =========================================================
-       ТРИ БОЛЬШИЕ КАРТОЧКИ РАЗДЕЛОВ
-       ========================================================= */
     .section-cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -436,9 +395,6 @@
       flex: 1;
     }
 
-    /* =========================================================
-       ЭКРАН РАЗДЕЛА / СТРАНЫ
-       ========================================================= */
     .back-btn {
       display: inline-flex;
       align-items: center;
@@ -496,9 +452,6 @@
       font-weight: 700;
     }
 
-    /* =========================================================
-       СЕТКА СТРАН
-       ========================================================= */
     .country-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -551,9 +504,6 @@
       overflow-wrap: break-word;
     }
 
-    /* =========================================================
-       СЕТКА ЭКСКУРСИЙ
-       ========================================================= */
     .excursion-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -612,7 +562,6 @@
       overflow-wrap: break-word;
     }
 
-    /* Кнопка «Начать экскурсию» — это <a>, открывающая ссылку в новой вкладке */
     .start-btn {
       display: flex;
       align-items: center;
@@ -669,7 +618,6 @@
       50%      { box-shadow: 0 0 0 7px rgba(240, 180, 41, 0); }
     }
 
-    /* Плашка абсолютным позиционированием — для карточек-плиток */
     .section-card .badge-new {
       position: absolute;
       top: 0.9rem;
@@ -681,16 +629,12 @@
       right: 0.7rem;
     }
 
-    /* Плашка внутри заголовка страны — inline после названия */
     .country-info h3 .badge-new {
       position: static;
       margin-left: 0.4rem;
       vertical-align: middle;
     }
 
-    /* =========================================================
-       ЗАГЛУШКА ПУСТОГО СОСТОЯНИЯ
-       ========================================================= */
     .empty-state {
       text-align: center;
       padding: 3rem 1.5rem;
@@ -703,9 +647,6 @@
       grid-column: 1 / -1;
     }
 
-    /* =========================================================
-       ПОДВАЛ
-       ========================================================= */
     .app-footer {
       text-align: center;
       padding: 2rem 1.5rem 3rem;
@@ -719,9 +660,6 @@
       font-weight: 700;
     }
 
-    /* =========================================================
-       АДАПТИВНОСТЬ
-       ========================================================= */
     @media (max-width: 720px) {
       .app-header { padding: 1.5rem 1rem 1.25rem; }
       .header-content { gap: 1rem; }
@@ -782,7 +720,6 @@
 </head>
 <body>
 
-  <!-- ================= ШАПКА САЙТА ================= -->
   <header class="app-header">
     <div class="header-content">
       <div class="brand">
@@ -793,7 +730,6 @@
         </p>
       </div>
 
-      <!-- Блок настроек доступности -->
       <div class="settings" role="group" aria-label="Настройки доступности">
         <div class="setting-group">
           <span class="setting-label" id="label-font">Размер шрифта</span>
@@ -815,11 +751,8 @@
     </div>
   </header>
 
-  <!-- ================= ОСНОВНОЙ КОНТЕНТ ================= -->
-  <!-- Сюда JS рендерит все SPA-экраны: главную, раздел и страну -->
   <main id="app" aria-live="polite"></main>
 
-  <!-- ================= ПОДВАЛ ================= -->
   <footer class="app-footer">
     <p>🚉 Счастливого пути! <strong>Вокзал виртуальных путешествий</strong> всегда открыт для вас</p>
   </footer>
@@ -827,38 +760,21 @@
   <script>
   /* ============================================================
      ВОКЗАЛ ВИРТУАЛЬНЫХ ПУТЕШЕСТВИЙ — логика SPA
-     ============================================================
-     Структура данных в data.json:
-     {
-       sections: [
-         { id, title, icon, description, isNew,
-           countries: [
-             { id, title, flag, description, isNew,
-               excursions: [
-                 { id, title, author, url, description, isNew }
-               ]
-             }
-           ]
-         }
-       ]
-     }
      ============================================================ */
 
   (function () {
     'use strict';
 
-    /* -------- Ключи хранилища -------- */
-    var STORAGE_VISITED = 'vokzal_visited';   // Массив id, которые пользователь уже видел
-    var STORAGE_THEME   = 'vokzal_theme';     // 'day' | 'night'
-    var STORAGE_FONT    = 'vokzal_font';      // 'small' | 'medium' | 'large'
+    var STORAGE_VISITED = 'vokzal_visited';
+    var STORAGE_THEME   = 'vokzal_theme';
+    var STORAGE_FONT    = 'vokzal_font';
 
-    /* -------- Глобальное состояние приложения -------- */
     var state = {
-      data: null,             // Объект с разделами (после fetch / fallback)
-      screen: 'home',         // Текущий экран: 'home' | 'section' | 'country'
-      currentSectionId: null, // id текущего раздела (для кнопки «Назад»)
-      currentCountryId: null, // id текущей страны (для кнопки «Назад»)
-      visited: new Set()      // Множество id, которые пользователь уже открыл
+      data: null,
+      screen: 'home',
+      currentSectionId: null,
+      currentCountryId: null,
+      visited: new Set()
     };
 
 
@@ -866,10 +782,6 @@
        БЛОК 1. УТИЛИТЫ
        ============================================================ */
 
-    /**
-     * Экранирует HTML-спецсимволы, чтобы обезопасить innerHTML от
-     * случайных «<» и «&» в тексте из JSON и не сломать разметку.
-     */
     function esc(value) {
       if (value == null) return '';
       return String(value)
@@ -882,14 +794,9 @@
 
 
     /* ============================================================
-       БЛОК 2. РАБОТА С localStorage
+       БЛОК 2. РАБОТА С localStorage И ЛОГИКА NEW
        ============================================================ */
 
-    /**
-     * Читает список просмотренных id из localStorage.
-     * Возвращает Set. При любой ошибке (localStorage отключён,
-     * битые данные) возвращает пустой Set — приложение не падает.
-     */
     function loadVisited() {
       try {
         var raw = localStorage.getItem(STORAGE_VISITED);
@@ -903,10 +810,6 @@
       }
     }
 
-    /**
-     * Сериализует текущее множество просмотренных id и сохраняет в localStorage.
-     * Если запись невозможна — молча логирует предупреждение.
-     */
     function saveVisited() {
       try {
         localStorage.setItem(STORAGE_VISITED, JSON.stringify(Array.from(state.visited)));
@@ -915,32 +818,28 @@
       }
     }
 
-    /**
-     * Помечает конкретный id как «просмотренный»:
-     * добавляет его в Set и сохраняет в localStorage.
-     * После этого маркер NEW у этого элемента исчезнет при следующем рендере.
-     */
     function markVisited(id) {
       if (!id) return;
       state.visited.add(id);
       saveVisited();
     }
 
-    /**
-     * Проверяет, нужно ли показывать маркер NEW у элемента:
-     *  - в JSON у элемента должно быть isNew === true;
-     *  - id элемента НЕ должен быть в списке просмотренных.
-     */
-    function isNewItem(item) {
-      return !!(item && item.isNew === true && !state.visited.has(item.id));
+    function isExcursionNew(exc) {
+      return !!(exc && exc.isNew === true && !state.visited.has(exc.id));
     }
 
-    /**
-     * Возвращает HTML-разметку маркера NEW или пустую строку.
-     * Применяется во всех рендерах, чтобы код был DRY.
-     */
-    function newBadge(item) {
-      return isNewItem(item) ? '<span class="badge-new">NEW</span>' : '';
+    function isCountryNew(country) {
+      if (!country || !Array.isArray(country.excursions)) return false;
+      return country.excursions.some(isExcursionNew);
+    }
+
+    function isSectionNew(section) {
+      if (!section || !Array.isArray(section.countries)) return false;
+      return section.countries.some(isCountryNew);
+    }
+
+    function newBadge(showNew) {
+      return showNew ? '<span class="badge-new">NEW</span>' : '';
     }
 
 
@@ -948,14 +847,6 @@
        БЛОК 3. ЗАГРУЗКА ДАННЫХ С FALLBACK
        ============================================================ */
 
-    /**
-     * Встроенные демо-данные.
-     * Используются, если fetch('data.json') не сработал — например,
-     * при открытии index.html напрямую с диска (file://), где браузер
-     * блокирует запросы к локальным файлам по CORS.
-     * Содержимое полностью повторяет data.json, чтобы поведение
-     * приложения было одинаковым в любом окружении.
-     */
     var FALLBACK_DATA = {
       version: 1,
       sections: [
@@ -964,14 +855,12 @@
           title: 'YouTube путешествия',
           icon: '🎬',
           description: 'Наблюдайте за миром глазами талантливых путешественников и видеографов. Уютно устройтесь в кресле — и отправляйтесь в путь.',
-          isNew: true,
           countries: [
             {
               id: 'cnt-switzerland',
               title: 'Швейцария',
               flag: '🇨🇭',
               description: 'Альпы, озёра и страна почти идеального порядка',
-              isNew: true,
               excursions: [
                 {
                   id: 'exc-swiss-ptushkin',
@@ -988,7 +877,6 @@
               title: 'Япония',
               flag: '🇯🇵',
               description: 'Токио, Киото и Осака: неон мегаполисов и тишина садов',
-              isNew: false,
               excursions: [
                 {
                   id: 'exc-japan-ptushkin',
@@ -1007,14 +895,12 @@
           title: 'Виртуальные экскурсии по музеям',
           icon: '🏛️',
           description: 'Прогуляйтесь по великим музеям мира, не выходя из дома. Шедевры, залы и истории ждут вас.',
-          isNew: true,
           countries: [
             {
               id: 'cnt-russia',
               title: 'Россия',
               flag: '🇷🇺',
               description: 'Эрмитаж, Третьяковка и другие сокровищницы',
-              isNew: true,
               excursions: [
                 {
                   id: 'exc-hermitage',
@@ -1031,7 +917,6 @@
               title: 'Франция',
               flag: '🇫🇷',
               description: 'Лувр — крупнейший художественный музей мира',
-              isNew: false,
               excursions: [
                 {
                   id: 'exc-louvre',
@@ -1050,14 +935,12 @@
           title: 'Онлайн-камеры',
           icon: '📡',
           description: 'Загляните в реальные уголки планеты в режиме реального времени. Живые города, площади и природные чудеса — прямо сейчас.',
-          isNew: true,
           countries: [
             {
               id: 'cnt-usa',
               title: 'США',
               flag: '🇺🇸',
               description: 'Манхэттен, Лос-Анджелес и природные парки',
-              isNew: true,
               excursions: [
                 {
                   id: 'exc-times-square',
@@ -1074,7 +957,6 @@
               title: 'Италия',
               flag: '🇮🇹',
               description: 'Венеция, Рим и Флоренция — вечная красота',
-              isNew: false,
               excursions: [
                 {
                   id: 'exc-venice-cam',
@@ -1091,12 +973,6 @@
       ]
     };
 
-    /**
-     * Асинхронно загружает data.json.
-     * Если запрос не удался (нет файла, CORS при file://, сервер вернул
-     * ошибку, JSON битый) — возвращает встроенный FALLBACK_DATA.
-     * Приложение всегда получает валидный объект с полем .sections.
-     */
     async function loadData() {
       try {
         var response = await fetch('data.json', { cache: 'no-store' });
@@ -1123,13 +999,6 @@
        БЛОК 4. РЕНДЕР ЭКРАНОВ
        ============================================================ */
 
-    /**
-     * Строит HTML-разметку хлебных крошек.
-     * items — массив: { label: string, action: string|null }.
-     *   action === null → текущая (последняя) крошка, некликабельная.
-     *   action === 'home' → вернуться на главную.
-     *   action === 'section:ID' → открыть раздел с указанным ID.
-     */
     function buildBreadcrumbs(items) {
       var html = '<nav class="breadcrumbs" aria-label="Хлебные крошки">';
       for (var i = 0; i < items.length; i++) {
@@ -1149,9 +1018,6 @@
       return html;
     }
 
-    /**
-     * Навешивает обработчики на все кликабельные крошки внутри app.
-     */
     function wireBreadcrumbs(app) {
       var crumbs = app.querySelectorAll('.crumb[data-crumb]');
       Array.prototype.forEach.call(crumbs, function (btn) {
@@ -1172,18 +1038,11 @@
       });
     }
 
-    /**
-     * РЕНДЕР ГЛАВНОГО ЭКРАНА.
-     * Показывает три крупные карточки-кнопки разделов.
-     * У разделов со статусом NEW (и не просмотренных) — золотая плашка.
-     * Клик по карточке → отмечает раздел просмотренным → открывает экран раздела.
-     */
     function renderHome() {
       var app = document.getElementById('app');
 
-      // Собираем HTML всех карточек разделов
       var cardsHtml = state.data.sections.map(function (section) {
-        var badge = newBadge(section);
+        var badge = newBadge(isSectionNew(section));
         return (
           '<div class="section-card" role="button" tabindex="0"' +
           ' data-section-id="' + esc(section.id) + '"' +
@@ -1205,12 +1064,10 @@
           '<div class="section-cards">' + cardsHtml + '</div>' +
         '</section>';
 
-      // Навешиваем обработчики на карточки (клик + клавиатура Enter/Space)
       var cards = app.querySelectorAll('.section-card');
       Array.prototype.forEach.call(cards, function (card) {
         function activate() {
           var id = card.getAttribute('data-section-id');
-          markVisited(id);          // Сразу гасим NEW у раздела на главной
           state.currentSectionId = id;
           state.screen = 'section';
           renderSection(id);
@@ -1225,15 +1082,9 @@
       });
     }
 
-    /**
-     * РЕНДЕР ЭКРАНА РАЗДЕЛА.
-     * Показывает заголовок раздела, его описание и сетку стран.
-     * Кнопка «Назад на Главную» возвращает на главный экран.
-     */
     function renderSection(sectionId) {
       var section = state.data.sections.filter(function (s) { return s.id === sectionId; })[0];
 
-      // Защита: если раздел не найден — вежливо возвращаемся домой
       if (!section) {
         goHome();
         return;
@@ -1241,11 +1092,10 @@
 
       var app = document.getElementById('app');
 
-      // Собираем карточки стран
       var countries = Array.isArray(section.countries) ? section.countries : [];
       var countriesHtml = countries.length
         ? countries.map(function (country) {
-            var badge = newBadge(country);
+            var badge = newBadge(isCountryNew(country));
             return (
               '<div class="country-card" role="button" tabindex="0"' +
               ' data-country-id="' + esc(country.id) + '"' +
@@ -1268,7 +1118,6 @@
       app.innerHTML =
         '<section class="screen">' +
           breadcrumbsHtml +
-          '<button type="button" class="back-btn" data-action="home">← Назад на Главную</button>' +
           '<header class="screen-header">' +
             '<div class="screen-header-icon" aria-hidden="true">' + esc(section.icon || '✨') + '</div>' +
             '<h2>' + esc(section.title) + '</h2>' +
@@ -1276,19 +1125,17 @@
           '</header>' +
           '<h3 class="subsection-title">Выберите страну</h3>' +
           '<div class="country-grid">' + countriesHtml + '</div>' +
+          '<button type="button" class="back-btn" data-action="home" style="margin-top: 2rem; margin-bottom: 0;">← Назад на Главную</button>' +
         '</section>';
 
       wireBreadcrumbs(app);
 
-      // Кнопка «Назад» — на главный экран
       app.querySelector('[data-action="home"]').addEventListener('click', goHome);
 
-      // Обработчики клика по странам
       var cards = app.querySelectorAll('.country-card');
       Array.prototype.forEach.call(cards, function (card) {
         function activate() {
           var id = card.getAttribute('data-country-id');
-          markVisited(id);          // Гасим NEW у страны
           state.currentCountryId = id;
           state.screen = 'country';
           renderCountry(sectionId, id);
@@ -1303,13 +1150,6 @@
       });
     }
 
-    /**
-     * РЕНДЕР ЭКРАНА СТРАНЫ.
-     * Показывает заголовок страны и сетку карточек экскурсий.
-     * Кнопка «Назад к разделу» возвращает на экран раздела.
-     * Кнопка «Начать экскурсию» — <a target="_blank"> с обработчиком,
-     * который помечает экскурсию просмотренной и убирает её маркер NEW.
-     */
     function renderCountry(sectionId, countryId) {
       var section = state.data.sections.filter(function (s) { return s.id === sectionId; })[0];
       var country = section && Array.isArray(section.countries)
@@ -1317,18 +1157,16 @@
         : null;
 
       if (!country) {
-        // Если страна не найдена — откатываемся на экран раздела
         renderSection(sectionId);
         return;
       }
 
       var app = document.getElementById('app');
 
-      // Собираем карточки экскурсий
       var excursions = Array.isArray(country.excursions) ? country.excursions : [];
       var excursionsHtml = excursions.length
         ? excursions.map(function (exc) {
-            var badge = newBadge(exc);
+            var badge = newBadge(isExcursionNew(exc));
             return (
               '<article class="excursion-card" data-excursion-id="' + esc(exc.id) + '">' +
                 '<div class="excursion-header">' +
@@ -1360,7 +1198,6 @@
       app.innerHTML =
         '<section class="screen">' +
           breadcrumbsHtml +
-          '<button type="button" class="back-btn" data-action="section">← Назад к разделу</button>' +
           '<header class="screen-header">' +
             '<div class="screen-header-icon" aria-hidden="true">' + esc(country.flag || '🌍') + '</div>' +
             '<h2>' + esc(country.title) + '</h2>' +
@@ -1368,26 +1205,21 @@
           '</header>' +
           '<h3 class="subsection-title">Доступные экскурсии</h3>' +
           '<div class="excursion-grid">' + excursionsHtml + '</div>' +
+          '<button type="button" class="back-btn" data-action="section" style="margin-top: 2rem; margin-bottom: 0;">← Назад к разделу</button>' +
         '</section>';
 
       wireBreadcrumbs(app);
 
-      // Кнопка «Назад» — возвращаемся в раздел
       app.querySelector('[data-action="section"]').addEventListener('click', function () {
         renderSection(sectionId);
       });
 
-      // Обработчик нажатия на «Начать экскурсию».
-      // ВАЖНО: не вызываем preventDefault — пусть <a target="_blank">
-      // откроет ссылку в новой вкладке, как задумано.
-      // Наш обработчик только фиксирует просмотр и убирает плашку NEW.
       var startButtons = app.querySelectorAll('.start-btn');
       Array.prototype.forEach.call(startButtons, function (btn) {
         btn.addEventListener('click', function () {
           var id = btn.getAttribute('data-excursion-id');
           markVisited(id);
 
-          // Мгновенно убираем визуальный маркер из карточки этой экскурсии
           var card = btn.closest('.excursion-card');
           if (card) {
             var badge = card.querySelector('.excursion-header .badge-new');
@@ -1402,10 +1234,6 @@
        БЛОК 5. НАВИГАЦИЯ
        ============================================================ */
 
-    /**
-     * Возвращает пользователя на главный экран SPA и плавно
-     * прокручивает страницу наверх.
-     */
     function goHome() {
       state.screen = 'home';
       state.currentSectionId = null;
@@ -1423,22 +1251,11 @@
        БЛОК 6. НАСТРОЙКИ ДОСТУПНОСТИ (тема + размер шрифта)
        ============================================================ */
 
-    /**
-     * Инициализирует кнопки-переключатели темы и размера шрифта.
-     * Читает сохранённые значения из localStorage, устанавливает
-     * соответствующие атрибуты на <html>, подсвечивает активные кнопки
-     * и навешивает обработчики кликов.
-     *
-     * Благодаря раннему inline-скрипту в <head> нужный атрибут уже
-     * проставлен до первой отрисовки — мы лишь синхронизируем кнопки.
-     */
     function initSettings() {
-      // Определяем активные значения (с учётом уже проставленных атрибутов)
       var root = document.documentElement;
       var currentTheme = root.getAttribute('data-theme') || 'day';
       var currentFont  = root.getAttribute('data-font')  || 'medium';
 
-      // --- Кнопки темы ---
       var themeButtons = document.querySelectorAll('button[data-theme]');
       Array.prototype.forEach.call(themeButtons, function (btn) {
         var isActive = btn.getAttribute('data-theme') === currentTheme;
@@ -1450,7 +1267,6 @@
           root.setAttribute('data-theme', theme);
           try { localStorage.setItem(STORAGE_THEME, theme); } catch (e) {}
 
-          // Обновляем состояние всех кнопок группы
           Array.prototype.forEach.call(themeButtons, function (b) {
             var active = b === btn;
             b.classList.toggle('active', active);
@@ -1459,7 +1275,6 @@
         });
       });
 
-      // --- Кнопки размера шрифта ---
       var fontButtons = document.querySelectorAll('button[data-font]');
       Array.prototype.forEach.call(fontButtons, function (btn) {
         var isActive = btn.getAttribute('data-font') === currentFont;
@@ -1485,32 +1300,16 @@
        БЛОК 7. ТОЧКА ВХОДА
        ============================================================ */
 
-    /**
-     * Асинхронная инициализация приложения.
-     * 1) Поднимаем список просмотренных id из localStorage.
-     * 2) Активируем переключатели темы/шрифта.
-     * 3) Загружаем данные (data.json или fallback).
-     * 4) Рендерим главный экран.
-     */
     async function init() {
-      // Загружаем просмотренные id (Set)
       state.visited = loadVisited();
-
-      // Подключаем настройки
       initSettings();
-
-      // Загружаем данные
       state.data = await loadData();
-
-      // Первый рендер
       renderHome();
     }
 
-    // Запускаемся, когда DOM полностью готов
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', init);
     } else {
-      // Скрипт в самом конце body — DOM уже готов, запускаем сразу
       init();
     }
 
