@@ -595,7 +595,6 @@
 
     /* =========================================================
        МАРКЕР "NEW" — мягко пульсирующая золотая плашка
-       (дизайн НЕ менялся)
        ========================================================= */
     .badge-new {
       display: inline-flex;
@@ -761,20 +760,6 @@
   <script>
   /* ============================================================
      ВОКЗАЛ ВИРТУАЛЬНЫХ ПУТЕШЕСТВИЙ — логика SPA
-     ============================================================
-     ВАЖНОЕ ОБ ИЗМЕНЕНИИ ЛОГИКИ «NEW»:
-
-     Источник правды для маркера NEW — ТОЛЬКО экскурсии.
-     Флаги isNew у разделов и стран из data.json НЕ читаются,
-     они вычисляются на лету:
-
-       • экскурсия NEW  →  isNew === true  и  её id ещё не в «просмотренных»;
-       • страна NEW     →  есть хотя бы одна NEW-экскурсия;
-       • раздел NEW     →  есть хотя бы одна NEW-страна.
-
-     Погасить маркер на всей «цепочке» (экскурсия → страна → раздел)
-     может только клик по кнопке «Начать экскурсию». Переходы по
-     разделам и странам NEW больше НЕ сбрасывают.
      ============================================================ */
 
   (function () {
@@ -833,40 +818,26 @@
       }
     }
 
-    /**
-     * Помечает id как просмотренный. Теперь вызывается ТОЛЬКО
-     * на кнопке «Начать экскурсию» (клик по карточке раздела
-     * или страны NEW больше не сбрасывает).
-     */
     function markVisited(id) {
       if (!id) return;
       state.visited.add(id);
       saveVisited();
     }
 
-    /* -------- Три уровня вычисления NEW -------- */
-
-    /** Экскурсия NEW, если в JSON isNew === true и id не просмотрен. */
     function isExcursionNew(exc) {
       return !!(exc && exc.isNew === true && !state.visited.has(exc.id));
     }
 
-    /** Страна NEW, если хотя бы одна её экскурсия — NEW. */
     function isCountryNew(country) {
       if (!country || !Array.isArray(country.excursions)) return false;
       return country.excursions.some(isExcursionNew);
     }
 
-    /** Раздел NEW, если хотя бы одна его страна — NEW. */
     function isSectionNew(section) {
       if (!section || !Array.isArray(section.countries)) return false;
       return section.countries.some(isCountryNew);
     }
 
-    /**
-     * Возвращает HTML маркера NEW (дизайн — тот же, что был)
-     * либо пустую строку. Принимает уже готовый boolean.
-     */
     function newBadge(showNew) {
       return showNew ? '<span class="badge-new">NEW</span>' : '';
     }
@@ -1067,9 +1038,6 @@
       });
     }
 
-    /**
-     * ГЛАВНЫЙ ЭКРАН. NEW у раздела теперь вычисляется по экскурсиям.
-     */
     function renderHome() {
       var app = document.getElementById('app');
 
@@ -1100,8 +1068,6 @@
       Array.prototype.forEach.call(cards, function (card) {
         function activate() {
           var id = card.getAttribute('data-section-id');
-          // NEW у раздела снимается только после клика
-          // по кнопке «Начать экскурсию» — здесь markVisited НЕ вызываем.
           state.currentSectionId = id;
           state.screen = 'section';
           renderSection(id);
@@ -1116,9 +1082,6 @@
       });
     }
 
-    /**
-     * ЭКРАН РАЗДЕЛА. NEW у страны тоже вычисляется.
-     */
     function renderSection(sectionId) {
       var section = state.data.sections.filter(function (s) { return s.id === sectionId; })[0];
 
@@ -1155,7 +1118,6 @@
       app.innerHTML =
         '<section class="screen">' +
           breadcrumbsHtml +
-          '<button type="button" class="back-btn" data-action="home">← Назад на Главную</button>' +
           '<header class="screen-header">' +
             '<div class="screen-header-icon" aria-hidden="true">' + esc(section.icon || '✨') + '</div>' +
             '<h2>' + esc(section.title) + '</h2>' +
@@ -1163,6 +1125,7 @@
           '</header>' +
           '<h3 class="subsection-title">Выберите страну</h3>' +
           '<div class="country-grid">' + countriesHtml + '</div>' +
+          '<button type="button" class="back-btn" data-action="home" style="margin-top: 2rem; margin-bottom: 0;">← Назад на Главную</button>' +
         '</section>';
 
       wireBreadcrumbs(app);
@@ -1173,8 +1136,6 @@
       Array.prototype.forEach.call(cards, function (card) {
         function activate() {
           var id = card.getAttribute('data-country-id');
-          // NEW у страны снимается только после клика
-          // по кнопке «Начать экскурсию» — здесь markVisited НЕ вызываем.
           state.currentCountryId = id;
           state.screen = 'country';
           renderCountry(sectionId, id);
@@ -1189,11 +1150,6 @@
       });
     }
 
-    /**
-     * ЭКРАН СТРАНЫ. NEW у экскурсии — как было. Клик по «Начать
-     * экскурсию» гасит маркер на всей цепочке (экскурсия → страна → раздел)
-     * при следующей навигации, потому что все три уровня вычисляются.
-     */
     function renderCountry(sectionId, countryId) {
       var section = state.data.sections.filter(function (s) { return s.id === sectionId; })[0];
       var country = section && Array.isArray(section.countries)
@@ -1242,7 +1198,6 @@
       app.innerHTML =
         '<section class="screen">' +
           breadcrumbsHtml +
-          '<button type="button" class="back-btn" data-action="section">← Назад к разделу</button>' +
           '<header class="screen-header">' +
             '<div class="screen-header-icon" aria-hidden="true">' + esc(country.flag || '🌍') + '</div>' +
             '<h2>' + esc(country.title) + '</h2>' +
@@ -1250,6 +1205,7 @@
           '</header>' +
           '<h3 class="subsection-title">Доступные экскурсии</h3>' +
           '<div class="excursion-grid">' + excursionsHtml + '</div>' +
+          '<button type="button" class="back-btn" data-action="section" style="margin-top: 2rem; margin-bottom: 0;">← Назад к разделу</button>' +
         '</section>';
 
       wireBreadcrumbs(app);
@@ -1258,17 +1214,12 @@
         renderSection(sectionId);
       });
 
-      // ЕДИНСТВЕННОЕ место, где гасится NEW.
-      // <a target="_blank"> открывает ссылку штатно, мы лишь фиксируем
-      // просмотр — и при следующей навигации маркер исчезнет
-      // у экскурсии, её страны и её раздела (все три уровня вычисляются).
       var startButtons = app.querySelectorAll('.start-btn');
       Array.prototype.forEach.call(startButtons, function (btn) {
         btn.addEventListener('click', function () {
           var id = btn.getAttribute('data-excursion-id');
           markVisited(id);
 
-          // Мгновенный визуальный отклик на текущем экране
           var card = btn.closest('.excursion-card');
           if (card) {
             var badge = card.querySelector('.excursion-header .badge-new');
