@@ -186,6 +186,23 @@
               "isNew": true
             }
           ]
+        },
+        {
+          "id": "cnt-italy",
+          "title": "Сейшельские острова",
+          "flag": "🇸🇨",
+          "description": "Первозданный тропический рай",
+          "isNew": true,
+          "excursions": [
+            {
+              "id": "exc-ыeychelles-cam",
+              "title": "Бо Валлон - Сейшельские острова",
+              "author": "Skyline Webcams",
+              "url": "https://www.skylinewebcams.com/en/webcam/seychelles/mahe/beau-vallon/beau-vallon-seychelles.html",
+              "description": "Панорамный вид на пляж Бо Валлон на Маэ из ресторана La Plage",
+              "isNew": true
+            }
+          ]
         }
       ]
     }
