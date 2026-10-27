@@ -188,14 +188,14 @@
           ]
         },
         {
-          "id": "cnt-italy",
+          "id": "cnt-seychelles",
           "title": "Сейшельские острова",
           "flag": "🇸🇨",
           "description": "Первозданный тропический рай",
           "isNew": true,
           "excursions": [
             {
-              "id": "exc-ыeychelles-cam",
+              "id": "exc-seychelles-cam",
               "title": "Бо Валлон - Сейшельские острова",
               "author": "Skyline Webcams",
               "url": "https://www.skylinewebcams.com/en/webcam/seychelles/mahe/beau-vallon/beau-vallon-seychelles.html",
