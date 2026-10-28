@@ -100,6 +100,23 @@
               "isNew": true
             }
           ]
+        },
+        {
+          "id": "cnt-belgium",
+          "title": "Бельгия",
+          "flag": "🇧🇪",
+          "description": "Бельгия — это ожившая средневековая сказка со вкусом премиального шоколада и изысканного пива в самом сердце Европы",
+          "isNew": true,
+          "excursions": [
+            {
+              "id": "exc-belgium-documentary",
+              "title": "Жизнь в Бельгии | Сказочное сердце Европы",
+              "author": "Country Films",
+              "url": "https://youtu.be/Pydvz84qVWQ?si=VfBJAwGed9F2rn1f",
+              "description": "Жизнь в Бельгии: как устроена страна с самыми высокими налогами в мире и городами, похожими на декорации к сказке.",
+              "isNew": true
+            }
+          ]
         }
       ]
     },
