@@ -9,8 +9,9 @@
   "icons": [
     {
       "src": "./apple-touch-icon.png",
-      "sizes": "192x192",
-      "type": "image/png"
+      "sizes": "189x189",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
