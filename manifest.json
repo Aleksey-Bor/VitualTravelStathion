@@ -4,8 +4,8 @@
   "description": "Бесплатные путешествия по миру для тех, кому дороги мечты",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#2196f3",
+  "background_color": "#F7D27D",
+  "theme_color": "#F0B429",
   "icons": [
     {
       "src": "./apple-touch-icon.png",
