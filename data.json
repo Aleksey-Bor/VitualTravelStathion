@@ -208,6 +208,23 @@
               "isNew": true
             }
           ]
+        },
+        {
+          "id": "cnt-monaco",
+          "title": "Монако",
+          "flag": "🇲🇨",
+          "description": "Крошечное княжество роскоши, яхт, Формулы-1 и казино Монте-Карло",
+          "isNew": true,
+          "excursions": [
+            {
+              "id": "exc-monaco-ilsinare",
+              "title": "Монако за 1 день | Как живет страна миллионеров?",
+              "author": "ilsinare",
+              "url": "https://youtu.be/sy94GhoE-Us?si=c9SNqdunBDf8swwz",
+              "description": "Прогулка по стране миллионеров за один день: смена караула у княжеского дворца, улочки старого города, знаменитое казино Монте-Карло и трасса Формулы-1. Также заглянем в новый район Маретерра, построенный прямо в море, и отдохнем на пляже Ларвотто.",
+              "isNew": true
+            }
+          ]
         }
       ]
     },
@@ -325,6 +342,23 @@
               "author": "Skyline Webcams",
               "url": "https://www.skylinewebcams.com/en/webcam/seychelles/mahe/beau-vallon/beau-vallon-seychelles.html",
               "description": "Панорамный вид на пляж Бо Валлон на Маэ из ресторана La Plage",
+              "isNew": true
+            }
+          ]
+        },
+        {
+          "id": "cnt-kenya",
+          "title": "Кения",
+          "flag": "🇰🇪",
+          "description": "Сердце африканского сафари и дикой природы",
+          "isNew": true,
+          "excursions": [
+            {
+              "id": "exc-kenya-cam",
+              "title": "Ол-Доньо Лодж - Кения",
+              "author": "Africam",
+              "url": "https://www.youtube.com/watch?v=XsOU8JnEpNM",
+              "description": "Прямая трансляция дикой природы на холмах Чьюлу между национальными парками Цаво и Амбосели",
               "isNew": true
             }
           ]
